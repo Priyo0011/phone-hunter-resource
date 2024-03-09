@@ -14,9 +14,18 @@
         <h1 class="text-5xl uppercase font-bold">Hunting Phone</h1>
     </header>
     <main class="container mx-auto mt-8">
+        <section class="bg-gray-100 m-4 p-4 rounded-xl">
+            <input id="search-field" type="text" placeholder="search..." class="input input-bordered w-full max-w-xs" />
+            <button onclick="handleSearch()" class="btn btn-accent">Search</button>
+        </section>
         <section>
-            <div id="phone-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-
+            <div id="loading-spinner" class="text-center my-40 hidden">
+                <span class="loading loading-spinner loading-lg"></span>
+            </div>
+            <div id="phone-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            </div>
+            <div id="show-all-container" class="hidden text-end">
+                <button onclick="handleShowAll()" class="btn btn-accent mt-8">SHOW ALL</button>
             </div>
         </section>
     </main>
