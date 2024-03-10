@@ -30,10 +30,10 @@ const displayPhones = (phones, isShowAll) => {
     <figure><img src="${phone.image}"
     alt="" /></figure>
     <div class="card-body">
+        <h1 class="text-3xl font-bold">${phone.brand}</h1>
         <h2 class="card-title">${phone.phone_name}</h2>
-        <p>If a dog chews shoes whose shoes does he choose?</p>
-        <div class="card-actions justify-end">
-            <button class="btn btn-primary">Buy Now</button>
+        <div class="card-actions justify-center">
+            <button onclick="handleShowDetail('${phone.slug}')" class="btn btn-primary">SHOW DETAILS</button>
         </div>
     </div>
     `;
@@ -41,6 +41,29 @@ const displayPhones = (phones, isShowAll) => {
   });
   toggleLoadingSpinner(false);
 };
+
+const handleShowDetail = async (id) => {
+  const res = await fetch(`https://openapi.programming-hero.com/api/phone/${id}`);
+  const data = await res.json();
+  const phone = data.data; 
+  showPhoneDetails(phone);
+}
+
+const showPhoneDetails = (phone) =>{
+  const phoneName = document.getElementById('show-detail-phone-name');
+  phoneName.innerText = phone.name;
+  const showDetailContainer = document.getElementById('show-detail-container');
+  showDetailContainer.innerHTML = `
+    <img src="${phone.image}" alt="">
+    <p><span class="font-bold">Storage:</span> ${phone?.mainFeatures?.storage}</p>
+    <p><span class="font-bold">Display Size:</span> ${phone?.mainFeatures?.displaySize}</p>
+    <p><span class="font-bold">ChipSet:</span> ${phone?.mainFeatures?.chipSet}</p>
+    <p><span class="font-bold">Memory:</span> ${phone?.mainFeatures?.memory}</p>
+    <p><span class="font-bold">Release Date:</span> ${phone?.mainFeatures?.releaseDate}</p>
+    <p><span class="font-bold">GPS:</span> ${phone?.others?.GPS}</p>  
+  `
+  show_details_modal.showModal();
+}
 
 const handleSearch = (isShowAll) => {
   toggleLoadingSpinner(true);
